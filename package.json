@@ -1,0 +1,31 @@
+{
+  "name": "wechat-task",
+  "version": "1.0.0",
+  "description": "wechat task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/star-share/wechat-task.git"
+  },
+  "keywords": [
+    "wechat"
+  ],
+  "type": "module",
+  "author": "star",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/star-share/wechat-task/issues"
+  },
+  "homepage": "https://github.com/star-share/wechat-task#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "node-schedule": "^2.1.0",
+    "qrcode-terminal": "^0.12.0",
+    "wechaty": "^1.10.4",
+    "wechaty-puppet-wechat": "^1.10.5"
+  }
+}
