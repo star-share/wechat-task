@@ -12,21 +12,22 @@ const RequestOptions = {
   withCredentials: false,
 };
 
-axios.interceptors.request.use((config) => {
-    // 可能某些请求是不需要设置loading的, 就直接设置这个参数为true就好了
-    const RequestConfig = { ...config, ...RequestOptions };
+// axios.interceptors.request.use((config) => {
+  
+//     // 可能某些请求是不需要设置loading的, 就直接设置这个参数为true就好了
+//     const RequestConfig = { ...config, ...RequestOptions };
 
-    // 设置请求头
-    RequestConfig.headers = {
-      ...RequestConfig.headers,
-      ...Headers,
-    };
-    return RequestConfig;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+//     // 设置请求头
+//     RequestConfig.headers = {
+//       ...RequestConfig.headers,
+//       ...Headers,
+//     };
+//     return RequestConfig;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 // 响应拦截
 axios.interceptors.response.use(({ data, status }) => {
@@ -34,7 +35,7 @@ axios.interceptors.response.use(({ data, status }) => {
     if (status && status === 401) {
     //   redirectSSO();
     }
-    return data;
+    return data
   },
   (error) => {
     console.error("[error]:", error);

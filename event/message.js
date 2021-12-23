@@ -7,8 +7,8 @@ import {delay} from "../utils"
 async function onMessageHandle(msg) {
     try {
       const room = msg.room(); // 是否为群消息
-      // const msgSelf = msg.self(); // 是否自己发给自己的消息
-      // if (msgSelf) return;
+      const msgSelf = msg.self(); // 是否自己发给自己的消息
+      if (msgSelf) return;
       if (room) {
         const roomName = await room.topic();
         const contact = msg.talker(); // 发消息人
@@ -93,8 +93,8 @@ async function dispatchRoomFilterByMsgType(that, room, msg) {
 
     let content = ''
     let replys = ''
-    let contactId = contact.id || '111'
-    let contactAvatar = await contact.avatar()
+    // let contactId = contact.id || '111'
+    // let contactAvatar = await contact.avatar()
     switch (type) {
       case that.Message.Type.Text:
         content = msg.text();
