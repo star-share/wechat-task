@@ -168,7 +168,7 @@ async function getKeywordReplyHandle(msg){
 
   // 新闻
   if (keywordArr.includes("新闻")) {
-    const res = await reptile.getDayShiCi()
+    const res = await News.networkhot()
     if (res?.msg === "success") {
       res?.newslist.map((item, i) => {
         if (i >= 15) return;
@@ -189,7 +189,7 @@ async function getKeywordReplyHandle(msg){
 
   // 诗词
   if (keywordArr.includes("诗词")) {
-    const shici = await News.networkhot();
+    const shici = await reptile.getDayShiCi()
     if(shici?.title){
       replysArr.push(Object.values(shici).join("<br/>"));
     }
