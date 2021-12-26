@@ -13,16 +13,16 @@ export default {
   OPEN_ROOM_LIST: ["hello world"],
 
   // 群消息关键字判断
-  ROOM_KEYWORD: ["新闻", "鸡汤", "早安"],
+  ROOM_KEYWORD: ["新闻", "鸡汤", "早安", "诗词"],
 
   // todo mysql存储 schedule   // 每天的凌晨1点1分30秒触发 ：'30 1 1 * * *'
   SCHEDULE_DATA_LIST: [
     {
-      date: "0 40 16 * * *",
+      date: "0 0 7 * * *",
       event: "morning",
     },
     {
-      date: "0 33 11 * * *",
+      date: "0 0 12 * * *",
       event: "noon",
     },
     {

@@ -2,6 +2,7 @@
 import {log} from "wechaty"
 import Config from "../config";
 import News from "../model/news"
+import reptile from "../model/reptile";
 import {delay} from "../utils"
 
 async function onMessageHandle(msg) {
@@ -155,22 +156,22 @@ function checkRoomName(roomName){
  */
 async function getKeywordReplyHandle(msg){
   const content = msg.text();
-  let replysArr = []
+  let replysArr = [];
 
   // 查找消息是否有关键字
-  const keywordArr = Config.ROOM_KEYWORD.reduce((arr, item)=>{
-    if(content.indexOf(item)> -1){
-      arr.push(item)
+  const keywordArr = Config.ROOM_KEYWORD.reduce((arr, item) => {
+    if (content.indexOf(item) > -1) {
+      arr.push(item);
     }
-    return arr
-  }, [])
+    return arr;
+  }, []);
 
   // 新闻
-  if(keywordArr.includes("新闻")){
-    const res = await News.networkhot();
+  if (keywordArr.includes("新闻")) {
+    const res = await reptile.getDayShiCi()
     if (res?.msg === "success") {
       res?.newslist.map((item, i) => {
-        if(i >= 15)return
+        if (i >= 15) return;
         replysArr.push(`${i + 1}、${item.title}`);
       });
     }
@@ -185,7 +186,15 @@ async function getKeywordReplyHandle(msg){
       });
     }
   }
-  
+
+  // 诗词
+  if (keywordArr.includes("诗词")) {
+    const shici = await News.networkhot();
+    if(shici?.title){
+      replysArr.push(Object.values(shici).join("<br/>"));
+    }
+  }
+
   return replysArr;
 }
 
