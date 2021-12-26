@@ -103,11 +103,11 @@ async function dispatchRoomFilterByMsgType(that, room, msg) {
         );
 
         // 获取关键字回复
-        replys += await getKeywordReplyHandle(msg)
+        const replysArr = await getKeywordReplyHandle(msg)
         
         // 发送
         await delay(1000);
-        replys && room.say(replys);
+        replysArr.length && room.say(replysArr.join("<br/>"));
        
         break;
       case that.Message.Type.Emoticon:
@@ -155,7 +155,7 @@ function checkRoomName(roomName){
  */
 async function getKeywordReplyHandle(msg){
   const content = msg.text();
-  let replys = ""
+  let replysArr = []
 
   // 查找消息是否有关键字
   const keywordArr = Config.ROOM_KEYWORD.reduce((arr, item)=>{
@@ -169,11 +169,10 @@ async function getKeywordReplyHandle(msg){
   if(keywordArr.includes("新闻")){
     const res = await News.networkhot();
     if (res?.msg === "success") {
-      let newsArr = [];
       res?.newslist.map((item, i) => {
-        newsArr.push(`${i + 1}、${item.title}`);
+        if(i >= 15)return
+        replysArr.push(`${i + 1}、${item.title}`);
       });
-      replys += newsArr.join("<br/><br/>");
     }
   }
 
@@ -181,16 +180,13 @@ async function getKeywordReplyHandle(msg){
   if (keywordArr.includes("早安") || keywordArr.includes("鸡汤")) {
     const res = await News.zaoan();
     if (res?.msg === "success") {
-      let newsArr = [];
       res?.newslist.map((item, i) => {
-        newsArr.push(`【微语】${item.content}`);
+        replysArr.push(`【微语】${item.content}`);
       });
-      replys += newsArr.join("<br/><br/>");
     }
-    log.info("zaoan", JSON.stringify(res))
   }
   
-  return replys;
+  return replysArr;
 }
 
 export default onMessageHandle

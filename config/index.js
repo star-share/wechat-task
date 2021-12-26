@@ -4,7 +4,8 @@ export default {
   TXAPI_ZAOAN_URL: "http://api.tianapi.com/zaoan/index", // 早安
   TXAPI_GUONEI_URL: "http://api.tianapi.com/guonei/index", // 国内新闻
   TXAPI_WORLD_URL: "http://api.tianapi.com/world/index", // 国际新闻
-  ONE: "http://wufazhuce.com/", // 每日一句网址
+  MEIRI_ONE_STR: "http://wufazhuce.com/", // 每日一句网址
+  MEIRISHICI_URL: "https://meirishici.com/", // 每日诗词
 
   QRCODE_URL: "https://wechaty.js.org/qrcode/",
 
@@ -19,6 +20,10 @@ export default {
     {
       date: "0 40 16 * * *",
       event: "morning",
+    },
+    {
+      date: "0 33 11 * * *",
+      event: "noon",
     },
     {
       date: "0 0 15 * * *",
