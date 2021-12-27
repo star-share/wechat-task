@@ -1,9 +1,18 @@
 export default {
+  // 天行
   TXAPIKEY: "e0ba5fe507b02561cb04ec8ae2d44c52", // 必填，天行数据key，
   TXAPI_NEWS_URL: "http://api.tianapi.com/networkhot/index", // 当前热点新闻
   TXAPI_ZAOAN_URL: "http://api.tianapi.com/zaoan/index", // 早安
+  TXAPI_WANAN_URL: "http://api.tianapi.com/wanan/index", // 晚安
   TXAPI_GUONEI_URL: "http://api.tianapi.com/guonei/index", // 国内新闻
   TXAPI_WORLD_URL: "http://api.tianapi.com/world/index", // 国际新闻
+
+  // 和风天气
+  QWEATHER_KEY: "6fcef20918ae49489f8c2d1f606e9ac5",
+  GET_CITY_ID_URL: "https://geoapi.qweather.com/v2/city/lookup",
+  GET_WEATHER_URL: "https://devapi.qweather.com/v7/weather/3d",
+
+  // 爬虫
   MEIRI_ONE_STR: "http://wufazhuce.com/", // 每日一句网址
   MEIRISHICI_URL: "https://meirishici.com/", // 每日诗词
 
@@ -13,12 +22,12 @@ export default {
   OPEN_ROOM_LIST: ["hello world"],
 
   // 群消息关键字判断
-  ROOM_KEYWORD: ["新闻", "鸡汤", "早安", "诗词"],
+  ROOM_KEYWORD: ["新闻", "鸡汤", "早安", "晚安", "诗词", "天气"],
 
   // todo mysql存储 schedule   // 每天的凌晨1点1分30秒触发 ：'30 1 1 * * *'
   SCHEDULE_DATA_LIST: [
     {
-      date: "0 0 7 * * *",
+      date: "0 0 6 * * *",
       event: "morning",
     },
     {
@@ -26,8 +35,12 @@ export default {
       event: "noon",
     },
     {
-      date: "0 0 15 * * *",
+      date: "0 0 18 * * *",
       event: "afternoon",
+    },
+    {
+      date: "0 30 23 * * *",
+      event: "night",
     },
   ],
 

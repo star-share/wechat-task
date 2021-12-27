@@ -1,5 +1,5 @@
 // 定时任务
-import * as schedule from "node-schedule"
+import * as schedule from "node-schedule";
 import { log } from "wechaty";
 import config from "../config";
 import news from "../model/news";
@@ -8,58 +8,60 @@ import { delay } from "../utils";
 
 // 早上定时任务
 export async function morning(that, scheduleConfig, scheduleName) {
+  log.info(scheduleName);
 
-  log.info(scheduleName)
-    let replyArr = [];
-    const getReplyHandle = async () => {
-      // 国内新闻
-      const guoneiNews = await news.guonei();
-      if (guoneiNews?.msg === "success") {
-        replyArr.push("【国内新闻】");
-        guoneiNews?.newslist.map((item, i) => {
-          replyArr.push(`${i + 1}、${item.title}`);
-        });
-      }
-
-      // 国际新闻
-      const worldNews = await news.world();
-      if (worldNews?.msg === "success") {
-        replyArr.push("【国际新闻】");
-        worldNews?.newslist.map((item, i) => {
-          replyArr.push(`${i + 1}、${item.title}`);
-        });
-      }
-
-      // 每日一句
-      const dayOne = await reptile.getOneDay();
-      if (dayOne) {
-        replyArr.push(`【心语】${dayOne}`);
-      }
-      log.info(dayOne);
+  let replyArr = [];
+  const getReplyHandle = async () => {
+    // 国内新闻
+    const guoneiNews = await news.guonei();
+    if (guoneiNews?.msg === "success") {
+      replyArr.push("【国内新闻】");
+      guoneiNews?.newslist.map((item, i) => {
+        replyArr.push(`${i + 1}、${item.title}`);
+      });
     }
 
-    config.OPEN_ROOM_LIST.forEach(async (roomName) => {
-        let room = await that.Room.find({ topic: roomName })
-        if (!room) {
-            log.info(`查找不到群：${roomName}，请检查群名是否正确`);
-            return
-        }
+    // 国际新闻
+    const worldNews = await news.world();
+    if (worldNews?.msg === "success") {
+      replyArr.push("【国际新闻】");
+      worldNews?.newslist.map((item, i) => {
+        replyArr.push(`${i + 1}、${item.title}`);
+      });
+    }
 
-        schedule.scheduleJob(scheduleName, { rule: scheduleConfig.date, tz: "Asia/Shanghai" }, async () => {
-            if (replyArr.length === 0) await getReplyHandle();
+    // 每日一句
+    const dayOne = await reptile.getOneDay();
+    if (dayOne) {
+      replyArr.push(`【心语】${dayOne}`);
+    }
+  };
+  
 
-            // 发送
-            await delay(1000);
-            replyArr.length && room.say(replyArr.join("<br/><br/>"));
-        });
+  config.OPEN_ROOM_LIST.forEach(async (roomName) => {
+    let room = await that.Room.find({ topic: roomName });
+    if (!room) {
+      log.info(`查找不到群：${roomName}，请检查群名是否正确`);
+      return;
+    }
 
-    })
-    
+    schedule.scheduleJob(
+      scheduleName,
+      { rule: scheduleConfig.date, tz: "Asia/Shanghai" },
+      async () => {
+        if (replyArr.length === 0) await getReplyHandle();
+        log.info(JSON.stringify(replyArr));
+        // 发送
+        await delay(1000);
+        replyArr.length > 0 && room.say(replyArr.join("<br/>"));
+      }
+    );
+  });
 }
 
 // 中午的定时任务
 export async function noon(that, scheduleConfig, scheduleName) {
-  log.info(scheduleName);
+  log.info(scheduleName, "noon");
   const shici = await reptile.getDayShiCi();
 
   config.OPEN_ROOM_LIST.forEach(async (roomName) => {
@@ -76,24 +78,71 @@ export async function noon(that, scheduleConfig, scheduleName) {
         // 发送
         await delay(1000);
         const replyArr = Object.values(shici);
-        replyArr.length && room.say(replyArr.join("<br/><br/>"));
+        replyArr.length > 0 && room.say(replyArr.join("<br/><br/>"));
       }
     );
   });
 }
 
+// 下午的定时任务
+export async function afternoon(that, scheduleConfig, scheduleName) {
+  log.info(scheduleName, "afternoon--");
+  const res = await news.wanan()
+  let replyArr = [];
+  if (res?.msg === "success") {
+    res?.newslist.map((item, i) => {
+      replyArr.push(`${item.content}`);
+    });
+  } else {
+    log.info(JSON.stringify(res));
+  }
+
+  config.OPEN_ROOM_LIST.forEach(async (roomName) => {
+    let room = await that.Room.find({ topic: roomName });
+    if (!room) {
+      log.info(`查找不到群：${roomName}，请检查群名是否正确`);
+      return;
+    }
+
+    schedule.scheduleJob(
+      scheduleName,
+      { rule: scheduleConfig.date, tz: "Asia/Shanghai" },
+      async () => {
+        // 发送
+        await delay(1000);
+        replyArr.length > 0 && room.say(replyArr.join("<br/><br/>"));
+      }
+    );
+  });
+
+}
 
 // 下午的定时任务
-export function afternoon(that, scheduleConfig, scheduleName){
+export async function night(that, scheduleConfig, scheduleName) {
+  log.info(scheduleName, "night--");
 
+  config.OPEN_ROOM_LIST.forEach(async (roomName) => {
+    let room = await that.Room.find({ topic: roomName });
+    if (!room) {
+      log.info(`查找不到群：${roomName}，请检查群名是否正确`);
+      return;
+    }
 
-
-
+    schedule.scheduleJob(
+      scheduleName,
+      { rule: scheduleConfig.date, tz: "Asia/Shanghai" },
+      async () => {
+        // 发送
+        await delay(1000);
+        room.say("@aoao 23：30了！放下手机睡觉了！");
+      }
+    );
+  });
 }
-
 
 export default {
-    morning,
-    afternoon,
-    noon
-}
+  morning,
+  afternoon,
+  noon,
+  night,
+};

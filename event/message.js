@@ -3,7 +3,9 @@ import {log} from "wechaty"
 import Config from "../config";
 import News from "../model/news"
 import reptile from "../model/reptile";
+import weather from "../model/weather";
 import {delay} from "../utils"
+import _ from "lodash"
 
 async function onMessageHandle(msg) {
     try {
@@ -108,7 +110,7 @@ async function dispatchRoomFilterByMsgType(that, room, msg) {
         
         // 发送
         await delay(1000);
-        replysArr.length && room.say(replysArr.join("<br/>"));
+        replysArr.length > 0 && room.say(replysArr.join("<br/>"));
        
         break;
       case that.Message.Type.Emoticon:
@@ -168,12 +170,14 @@ async function getKeywordReplyHandle(msg){
 
   // 新闻
   if (keywordArr.includes("新闻")) {
-    const res = await News.networkhot()
+    const res = await News.networkhot();
     if (res?.msg === "success") {
       res?.newslist.map((item, i) => {
         if (i >= 15) return;
         replysArr.push(`${i + 1}、${item.title}`);
       });
+    } else {
+      log.info(JSON.stringify(res));
     }
   }
 
@@ -184,14 +188,51 @@ async function getKeywordReplyHandle(msg){
       res?.newslist.map((item, i) => {
         replysArr.push(`【微语】${item.content}`);
       });
+    } else {
+      log.info(JSON.stringify(res));
+    }
+  }
+
+  // 晚安
+  if (keywordArr.includes("晚安")) {
+    const res = await News.wanan();
+    if (res?.msg === "success") {
+      res?.newslist.map((item, i) => {
+        replysArr.push(`${item.content}`);
+      });
+    } else {
+      log.info(JSON.stringify(res));
     }
   }
 
   // 诗词
   if (keywordArr.includes("诗词")) {
-    const shici = await reptile.getDayShiCi()
-    if(shici?.title){
+    const shici = await reptile.getDayShiCi();
+    if (shici?.title) {
       replysArr.push(Object.values(shici).join("<br/>"));
+    } else {
+      log.info(JSON.stringify(res));
+    }
+  }
+
+  // 天气
+  const cityName = content.replace("天气", "");
+  if (keywordArr.includes("天气") && cityName.length) {
+    const cityIdData = await weather.getLocationId(cityName);
+    const cityId = _.get(cityIdData, "location[0].id", "");
+    if (cityId) {
+      const weatherData = await weather.getWeather(cityId);
+      if (weatherData.code == 200) {
+        const { daily } = weatherData;
+        replysArr.push(
+          `${_.get(cityIdData, "location[0].name", "")} ${
+            daily[0].fxDate
+          }的天气`
+        );
+        replysArr.push(`白天：${daily[0].textDay}`);
+        replysArr.push(`晚间：${daily[0].textNight}`);
+        replysArr.push(`气温：${daily[0].tempMin}°C~${daily[0].tempMax}°C`);
+      }
     }
   }
 

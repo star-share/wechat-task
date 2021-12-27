@@ -17,7 +17,7 @@ export default function onLogin(user){
         return
     }
     setTimeout(()=>{
-      room.say(`${user.name()}的小助手已登录该群！`);
+      // room.say(`每日提醒小助手已登录该群！`);
     }, 2000)
   })
 }
