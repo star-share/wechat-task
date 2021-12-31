@@ -226,8 +226,8 @@ async function getKeywordReplyHandle(msg) {
     }
   }
 
-  // 成语
-  if (content.length === 4) {
+  // 成语 
+  if (/^[\u4e00-\u9fa5]{4}$/.test(content)) {
     const res = await News.chengyudiangu(content);
     if (res?.msg === "success") {
       res?.newslist.map((item, i) => {
