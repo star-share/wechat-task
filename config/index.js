@@ -1,10 +1,7 @@
+import keyConfig from "./ENV";
 
-let keyData = {}
-try {
-  keyData = require("./ENV")
-} catch (error) {
-  console.log(error)
-}
+let keyData = {};
+keyData = keyConfig;
 
 export default {
   // 天行
@@ -33,34 +30,43 @@ export default {
   OPEN_ROOM_LIST: ["hello world"],
 
   // 群消息关键字判断
-  ROOM_KEYWORD: ["新闻", "毒鸡汤", "早安", "晚安", "诗词", "天气", "成语", "名句"],
+  ROOM_KEYWORD: [
+    "新闻",
+    "毒鸡汤",
+    "早安",
+    "晚安",
+    "诗词",
+    "天气",
+    "成语",
+    "名句",
+  ],
 
   // todo mysql存储 schedule   // 每天的凌晨1点1分30秒触发 ：'30 1 1 * * *'
   SCHEDULE_DATA_LIST: [
     {
       date: "0 0 6 * * *",
       event: "morning",
-      roomName: "hello world",
+      roomName: "hello 2022",
     },
     {
       date: "0 0 12 * * *",
       event: "noon",
-      roomName: "hello world",
+      roomName: "hello 2022",
     },
     {
       date: "0 0 18 * * *",
       event: "afternoon",
-      roomName: "hello world",
+      roomName: "hello 2022",
     },
     {
       date: "0 30 23 * * *",
       event: "night",
-      roomName: "hello world",
+      roomName: "hello 2022",
     },
     {
       date: "0 31 23 * * *",
       event: "wanan",
-      roomName: "hello world",
+      roomName: "hello 2022",
     },
   ],
 
