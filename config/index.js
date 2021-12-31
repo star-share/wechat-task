@@ -26,8 +26,8 @@ export default {
 
   QRCODE_URL: "https://wechaty.js.org/qrcode/",
 
-  // 启动功能群 名称   todo del
-  OPEN_ROOM_LIST: ["hello world"],
+  // 关键字回复开启功能群
+  OPEN_ROOM_LIST: ["hello 2022"],
 
   // 群消息关键字判断
   ROOM_KEYWORD: [
