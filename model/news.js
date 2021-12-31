@@ -41,8 +41,12 @@ export default {
 
   // 成语典故
   chengyudiangu: (word) => {
-    return axios.get(
-      `${config.TXAPI_CHENGYU_URL}?key=${config.TXAPIKEY}&word=${word}`
+    return axios.post(
+      `${config.TXAPI_CHENGYU_URL}`,
+      {
+        key: config.TXAPIKEY,
+        word
+      }
     );
   },
 

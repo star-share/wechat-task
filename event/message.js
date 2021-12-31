@@ -207,7 +207,7 @@ async function getKeywordReplyHandle(msg) {
         replysArr.push(`${item.title}`);
         replysArr.push(`${item.author}`);
         replysArr.push(`${item.content}`);
-        replysArr.push(`${item.intro}`);
+        // replysArr.push(`${item.intro}`);
       });
     } else {
       log.info(JSON.stringify(res));

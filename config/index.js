@@ -17,7 +17,7 @@ export default {
   TXAPI_POETRY_URL: "http://api.tianapi.com/poetry/index", // 唐诗三百
 
   // 和风天气
-  QWEATHER_KEY: "6fcef20918ae49489f8c2d1f606e9ac5",
+  QWEATHER_KEY: keyData?.QWEATHER_KEY || "和风天气key",
   GET_CITY_ID_URL: "https://geoapi.qweather.com/v2/city/lookup",
   GET_WEATHER_URL: "https://devapi.qweather.com/v7/weather/3d",
 
