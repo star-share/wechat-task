@@ -37,9 +37,11 @@ export default {
       let $ = cheerio.load(res);
       let title = $("#container h2.mb-5.text-center").find("a").text();
       let text = $("#container .display-pre.text-center").text();
+      let auth = $("#container .time-meta .text-right.col-6").text()
 
       return {
         title,
+        auth,
         text,
       };
     } catch (error) {

@@ -40,7 +40,14 @@ export default {
   },
 
   // 成语典故
-  chengyudiangu: () => {
-    return axios.get(`${config.TXAPI_CHENGYU_URL}?key=${config.TXAPIKEY}`);
+  chengyudiangu: (word) => {
+    return axios.get(
+      `${config.TXAPI_CHENGYU_URL}?key=${config.TXAPIKEY}&word=${word}`
+    );
+  },
+
+  // 唐诗三百
+  tangshisanbai: () => {
+    return axios.get(`${config.TXAPI_POETRY_URL}?key=${config.TXAPIKEY}`);
   },
 };

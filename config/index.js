@@ -14,6 +14,7 @@ export default {
   TXAPI_GJMJ_URL: "http://api.tianapi.com/gjmj/index", // 古籍名句
   TXAPI_DUJITANG_URL: "http://api.tianapi.com/dujitang/index", // 毒鸡汤
   TXAPI_CHENGYU_URL: "http://api.tianapi.com/chengyu/index", // 成语典故
+  TXAPI_POETRY_URL: "http://api.tianapi.com/poetry/index", // 唐诗三百
 
   // 和风天气
   QWEATHER_KEY: "6fcef20918ae49489f8c2d1f606e9ac5",

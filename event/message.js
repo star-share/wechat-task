@@ -201,9 +201,14 @@ async function getKeywordReplyHandle(msg) {
 
   // 诗词
   if (keywordArr.includes("诗词")) {
-    const shici = await reptile.getDayShiCi();
-    if (shici?.title) {
-      replysArr.push(Object.values(shici).join("<br/>"));
+    const res = await News.tangshisanbai();
+    if (res?.msg === "success") {
+      res?.newslist.map((item, i) => {
+        replysArr.push(`${item.title}`);
+        replysArr.push(`${item.author}`);
+        replysArr.push(`${item.content}`);
+        replysArr.push(`${item.intro}`);
+      });
     } else {
       log.info(JSON.stringify(res));
     }
@@ -222,8 +227,8 @@ async function getKeywordReplyHandle(msg) {
   }
 
   // 成语
-  if (keywordArr.includes("成语")) {
-    const res = await News.chengyudiangu();
+  if (content.length === 4) {
+    const res = await News.chengyudiangu(content);
     if (res?.msg === "success") {
       res?.newslist.map((item, i) => {
         replysArr.push(`${item.chengyu}`);
