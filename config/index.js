@@ -1,11 +1,22 @@
+
+let keyData = {}
+try {
+  keyData = require("./ENV")
+} catch (error) {
+  console.log(error)
+}
+
 export default {
   // 天行
-  TXAPIKEY: "e0ba5fe507b02561cb04ec8ae2d44c52", // 必填，天行数据key，
+  TXAPIKEY: keyData?.TXAPIKEY || "天行数据key", // 必填，天行数据key，
   TXAPI_NEWS_URL: "http://api.tianapi.com/networkhot/index", // 当前热点新闻
   TXAPI_ZAOAN_URL: "http://api.tianapi.com/zaoan/index", // 早安
   TXAPI_WANAN_URL: "http://api.tianapi.com/wanan/index", // 晚安
   TXAPI_GUONEI_URL: "http://api.tianapi.com/guonei/index", // 国内新闻
   TXAPI_WORLD_URL: "http://api.tianapi.com/world/index", // 国际新闻
+  TXAPI_GJMJ_URL: "http://api.tianapi.com/gjmj/index", // 古籍名句
+  TXAPI_DUJITANG_URL: "http://api.tianapi.com/dujitang/index", // 毒鸡汤
+  TXAPI_CHENGYU_URL: "http://api.tianapi.com/chengyu/index", // 成语典故
 
   // 和风天气
   QWEATHER_KEY: "6fcef20918ae49489f8c2d1f606e9ac5",
@@ -18,29 +29,38 @@ export default {
 
   QRCODE_URL: "https://wechaty.js.org/qrcode/",
 
-  // 启动功能群 名称
+  // 启动功能群 名称   todo del
   OPEN_ROOM_LIST: ["hello world"],
 
   // 群消息关键字判断
-  ROOM_KEYWORD: ["新闻", "鸡汤", "早安", "晚安", "诗词", "天气"],
+  ROOM_KEYWORD: ["新闻", "毒鸡汤", "早安", "晚安", "诗词", "天气", "成语", "名句"],
 
   // todo mysql存储 schedule   // 每天的凌晨1点1分30秒触发 ：'30 1 1 * * *'
   SCHEDULE_DATA_LIST: [
     {
       date: "0 0 6 * * *",
       event: "morning",
+      roomName: "hello world",
     },
     {
       date: "0 0 12 * * *",
       event: "noon",
+      roomName: "hello world",
     },
     {
       date: "0 0 18 * * *",
       event: "afternoon",
+      roomName: "hello world",
     },
     {
       date: "0 30 23 * * *",
       event: "night",
+      roomName: "hello world",
+    },
+    {
+      date: "0 31 23 * * *",
+      event: "wanan",
+      roomName: "hello world",
     },
   ],
 
