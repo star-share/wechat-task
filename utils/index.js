@@ -1,4 +1,6 @@
-import * as wechaty from "wechaty";
+import { UrlLink, MiniProgram } from "wechaty";
+import { FileBox } from "file-box";
+
 
 /**
  * 延时函数
@@ -21,17 +23,17 @@ export async function roomSay(room, contact, msg) {
       // contact ? await room.say(msg.content, contact) : await room.say(msg.content)
     } else if (msg.type === 2 && msg.url) {
       // url文件
-      let obj = wechaty.FileBox.fromUrl(msg.url);
+      let obj = FileBox.fromUrl(msg.url);
       // contact ? await room.say('', contact) : ''
       await room.say(obj);
     } else if (msg.type === 3 && msg.url) {
       // bse64文件
-      let obj = wechaty.FileBox.fromDataURL(msg.url, "room-avatar.jpg");
+      let obj = FileBox.fromDataURL(msg.url, "room-avatar.jpg");
       // contact ? await room.say('', contact) : ''
       // await delay(500)
       await room.say(obj);
     } else if (msg.type === 4 && msg.url && msg.title && msg.description) {
-      let url = new wechaty.UrlLink({
+      let url = new UrlLink({
         description: msg.description,
         thumbnailUrl: msg.thumbUrl,
         title: msg.title,
@@ -48,7 +50,7 @@ export async function roomSay(room, contact, msg) {
       msg.thumbUrl &&
       msg.thumbKey
     ) {
-      let miniProgram = new wechaty.MiniProgram({
+      let miniProgram = new MiniProgram({
         appid: msg.appid,
         title: msg.title,
         pagePath: msg.pagePath,
