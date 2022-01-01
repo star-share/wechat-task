@@ -262,12 +262,14 @@ async function getKeywordReplyHandle(msg) {
   }
 
   // 美女
-  if (keywordArr.includes("美女")) {
-    const pageIndex = _.random(1, 6);
-    const meinvArr = await reptile.getMeinv(pageIndex);
-    const randomIndex = _.random(0, meinvArr.length);
+  if (keywordArr.includes("壁纸")) {
+    const index = _.random(1, 24000);
+    const bizhiUrl = reptile.getBizhi(index)
 
-    replysArr.push(meinvArr[randomIndex].href);
+    return {
+      type: 2,
+      url: bizhiUrl
+    }
 
     // return {
     //   type: 2,

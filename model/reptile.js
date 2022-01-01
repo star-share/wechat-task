@@ -52,11 +52,27 @@ export default {
     }
   },
 
-  // 获取美女图
+  // 获取美女图  del
   getMeinv: async (pageIndex) => {
     const fileUrl = path.resolve(`model/data/meinv${pageIndex}.json`);
     const meinvData = fs.readFileSync(fileUrl);
     return JSON.parse(meinvData)
+  },
+
+  // 获取壁纸
+  getBizhi: async (index) => {
+    try {
+       const url = config.MEINV_IMG_URL.replace("{index}", index);
+       const res = await axios.get(url, {
+         headers: HTML_HEADERS,
+       });
+       let $ = cheerio.load(res);
+       const img = $(".endpage .pic img").attr("src");
+       return img;
+      
+    } catch (error) {
+      console.log("获取壁纸失败！", error);
+    }
   },
 
 };

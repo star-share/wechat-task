@@ -24,7 +24,7 @@ export default {
   // 爬虫
   MEIRI_ONE_STR: "http://wufazhuce.com/", // 每日一句网址
   MEIRISHICI_URL: "https://meirishici.com/", // 每日诗词
-  MEINV_IMG_URL: "https://www.ikanins.com/page/{page}/", // 美女图  1-6页
+  MEINV_IMG_URL: "http://www.netbian.com/desk/{index}.htm", // 壁纸 1-24000
 
   QRCODE_URL: "https://wechaty.js.org/qrcode/",
 
@@ -32,7 +32,16 @@ export default {
   OPEN_ROOM_LIST: ["hello 2022"],
 
   // 群消息关键字判断
-  ROOM_KEYWORD: ["新闻", "毒鸡汤", "早安", "晚安", "诗词", "天气", "名句", "美女"],
+  ROOM_KEYWORD: [
+    "新闻",
+    "毒鸡汤",
+    "早安",
+    "晚安",
+    "诗词",
+    "天气",
+    "名句",
+    "壁纸",
+  ],
 
   // todo mysql存储 schedule   // 每天的凌晨1点1分30秒触发 ：'30 1 1 * * *'
   SCHEDULE_DATA_LIST: [
