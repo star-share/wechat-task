@@ -267,18 +267,19 @@ async function getKeywordReplyHandle(msg) {
     const meinvArr = await reptile.getMeinv(pageIndex);
     const randomIndex = _.random(0, meinvArr.length);
 
+    replysArr.push(meinvArr[randomIndex].href);
 
-    return {
-      type: 2,
-      url: meinvArr[randomIndex].src,
-      linkObj: {
-        type: 4,
-        description: "这位美女的图集",
-        thumbUrl: meinvArr[randomIndex].src,
-        title: "美女图集",
-        url: meinvArr[randomIndex].href,
-      },
-    };
+    // return {
+    //   type: 2,
+    //   url: meinvArr[randomIndex].src,
+    //   linkObj: {
+    //     type: 4,
+    //     description: "这位美女的图集",
+    //     thumbUrl: meinvArr[randomIndex].src,
+    //     title: "美女图集",
+    //     url: meinvArr[randomIndex].href,
+    //   },
+    // };
   }
 
   // 天气
