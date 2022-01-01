@@ -4,8 +4,8 @@
   "description": "wechat task",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --experimental-modules --es-module-specifier-resolution=node index.js"
+    "start": "node --experimental-modules --es-module-specifier-resolution=node index.js",
+    "dev": "node --experimental-modules --es-module-specifier-resolution=node test.js"
   },
   "repository": {
     "type": "git",
@@ -29,5 +29,8 @@
     "qrcode-terminal": "^0.12.0",
     "wechaty": "^1.10.4",
     "wechaty-puppet-wechat": "^1.10.5"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

@@ -3,7 +3,7 @@ import Config from "../config";
 import News from "../model/news";
 import reptile from "../model/reptile";
 import weather from "../model/weather";
-import { delay } from "../utils";
+import { delay, roomSay } from "../utils";
 import _ from "lodash";
 
 async function onMessageHandle(msg) {
@@ -105,7 +105,15 @@ async function dispatchRoomFilterByMsgType(that, room, msg) {
 
         // 发送
         await delay(1000);
-        replysArr.length > 0 && room.say(replysArr.join("<br/>"));
+        if(Array.isArray(replysArr)){
+          replysArr.length > 0 && room.say(replysArr.join("<br/>"));
+        }else{
+          await roomSay(room, contact, replysArr);
+          if(replysArr?.linkObj){
+            await delay(1600);
+            await roomSay(room, contact, replysArr?.linkObj);
+          }
+        }
 
         break;
       case that.Message.Type.Emoticon:
@@ -226,7 +234,7 @@ async function getKeywordReplyHandle(msg) {
     }
   }
 
-  // 成语 
+  // 成语
   if (/^[\u4e00-\u9fa5]{4}$/.test(content)) {
     const res = await News.chengyudiangu(content);
     if (res?.msg === "success") {
@@ -251,6 +259,26 @@ async function getKeywordReplyHandle(msg) {
     } else {
       log.info(JSON.stringify(res));
     }
+  }
+
+  // 美女
+  if (keywordArr.includes("美女")) {
+    const pageIndex = _.random(1, 6);
+    const meinvArr = await reptile.getMeinv(pageIndex);
+    const randomIndex = _.random(0, meinvArr.length);
+
+
+    return {
+      type: 2,
+      url: meinvArr[randomIndex].src,
+      linkObj: {
+        type: 4,
+        description: "这位美女的图集",
+        thumbUrl: meinvArr[randomIndex].src,
+        title: "美女图集",
+        url: meinvArr[randomIndex].href,
+      },
+    };
   }
 
   // 天气

@@ -2,6 +2,9 @@ import axios from "./axios";
 import config from "../config";
 import * as cheerio from "cheerio";
 import { log } from "wechaty";
+import fs from "fs";
+import path from "path";
+
 
 const HTML_HEADERS = {
   Accept: "text/plain, text/html, */*",
@@ -37,7 +40,7 @@ export default {
       let $ = cheerio.load(res);
       let title = $("#container h2.mb-5.text-center").find("a").text();
       let text = $("#container .display-pre.text-center").text();
-      let auth = $("#container .time-meta .text-right.col-6").text()
+      let auth = $("#container .time-meta .text-right.col-6").text();
 
       return {
         title,
@@ -48,4 +51,12 @@ export default {
       console.log("获取每日诗词失败：", error);
     }
   },
+
+  // 获取美女图
+  getMeinv: async (pageIndex) => {
+    const fileUrl = path.resolve(`model/data/meinv${pageIndex}.json`);
+    const meinvData = fs.readFileSync(fileUrl);
+    return JSON.parse(meinvData)
+  },
+
 };

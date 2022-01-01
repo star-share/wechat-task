@@ -20,17 +20,18 @@ const getRoom = async (that, roomName) => {
 export async function morning(that, scheduleConfig, scheduleName) {
   log.info(scheduleName);
 
-  let replyArr = [];
+  
   const { roomName, date } = scheduleConfig;
   const room = await getRoom(that, roomName);
 
   const getReplyHandle = async () => {
+    let replyArr = [];
     // 国内新闻
     const guoneiNews = await news.guonei();
     if (guoneiNews?.msg === "success") {
       replyArr.push("【国内新闻】");
       guoneiNews?.newslist.map((item, i) => {
-        replyArr.push(`${i + 1}、${item.title}`);
+        if(i < 10)replyArr.push(`${i + 1}、${item.title}`);
       });
     }
 
@@ -39,7 +40,7 @@ export async function morning(that, scheduleConfig, scheduleName) {
     if (worldNews?.msg === "success") {
       replyArr.push("【国际新闻】");
       worldNews?.newslist.map((item, i) => {
-        replyArr.push(`${i + 1}、${item.title}`);
+        if (i < 10)replyArr.push(`${i + 1}、${item.title}`);
       });
     }
 
@@ -48,13 +49,14 @@ export async function morning(that, scheduleConfig, scheduleName) {
     if (dayOne) {
       replyArr.push(`【心语】${dayOne}`);
     }
+    return replyArr
   };
 
   schedule.scheduleJob(
     scheduleName,
     { rule: date, tz: "Asia/Shanghai" },
     async () => {
-      await getReplyHandle();
+      const replyArr = await getReplyHandle();
       // log.info(JSON.stringify(replyArr));
       // 发送
       await delay(1000);
