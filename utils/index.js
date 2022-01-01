@@ -1,4 +1,4 @@
-import { UrlLink, MiniProgram } from "wechaty";
+import { UrlLink } from "wechaty";
 import { FileBox } from "file-box";
 
 
@@ -41,25 +41,8 @@ export async function roomSay(room, contact, msg) {
       });
       console.log(url);
       await room.say(url);
-    } else if (
-      msg.type === 5 &&
-      msg.appid &&
-      msg.title &&
-      msg.pagePath &&
-      msg.description &&
-      msg.thumbUrl &&
-      msg.thumbKey
-    ) {
-      let miniProgram = new MiniProgram({
-        appid: msg.appid,
-        title: msg.title,
-        pagePath: msg.pagePath,
-        description: msg.description,
-        thumbUrl: msg.thumbUrl,
-        thumbKey: msg.thumbKey,
-      });
-      await room.say(miniProgram);
     }
+    
   } catch (e) {
     console.log("群回复错误", e);
   }
