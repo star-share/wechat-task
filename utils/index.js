@@ -1,4 +1,4 @@
-import { UrlLink } from "wechaty";
+// import { UrlLink } from "wechaty";
 import { FileBox } from "file-box";
 
 
@@ -33,16 +33,16 @@ export async function roomSay(room, contact, msg) {
       // await delay(500)
       await room.say(obj);
     } else if (msg.type === 4 && msg.url && msg.title && msg.description) {
-      let url = new UrlLink({
-        description: msg.description,
-        thumbnailUrl: msg.thumbUrl,
-        title: msg.title,
-        url: msg.url,
-      });
-      console.log(url);
-      await room.say(url);
+      // let url = new UrlLink({
+      //   description: msg.description,
+      //   thumbnailUrl: msg.thumbUrl,
+      //   title: msg.title,
+      //   url: msg.url,
+      // });
+      // console.log(url);
+      // await room.say(url);
     }
-    
+
   } catch (e) {
     console.log("群回复错误", e);
   }

@@ -109,10 +109,10 @@ async function dispatchRoomFilterByMsgType(that, room, msg) {
           replysArr.length > 0 && room.say(replysArr.join("<br/>"));
         }else{
           await roomSay(room, contact, replysArr);
-          if(replysArr?.linkObj){
-            await delay(1600);
-            await roomSay(room, contact, replysArr?.linkObj);
-          }
+          // if(replysArr?.linkObj){
+          //   await delay(1600);
+          //   await roomSay(room, contact, replysArr?.linkObj);
+          // }
         }
 
         break;
